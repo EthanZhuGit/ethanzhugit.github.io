@@ -31,6 +31,9 @@
 		</form> -->
 		<!-- uni 的 SDK -->
 		<script type="text/javascript" src="https://js.cdn.aliyun.dcloud.net.cn/dev/uni-app/uni.webview.1.5.1.js"></script>
+
+		<script type="text/javascript" src="https://res.wx.qq.com/open/js/jweixin-1.4.0.js"></script>
+
 		<script type="text/javascript" src="js/h5uploader.js"></script>
 		<script type="text/javascript" src="https://cdn.bootcss.com/crypto-js/3.1.9-1/crypto-js.min.js"></script>
 		<script type="text/javascript" src="js/signclient.js"></script>
@@ -77,9 +80,9 @@
 				// 	url: '/pages/yzcloud/yz-preview?fileData=' + encodeURIComponent(JSON.stringify(data)),
 				// })
 				// 返回上一级页面,通过@message接收数据,并放到store中,以便提交时获取文件数据
-				// uni.navigateBack({
-				//     delta: 1
-				// });
+				uni.navigateBack({
+				    delta: 1
+				});
 			}
 			
 			function onUploaderClick() {
