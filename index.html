@@ -86,13 +86,38 @@
 <!-- uni 的 SDK -->
 <script type="text/javascript" src="https://js.cdn.aliyun.dcloud.net.cn/dev/uni-app/uni.webview.1.5.2.js"></script>
 
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/qiniu-js/3.4.0/qiniu.min.js"></script>
 <script type="text/javascript">
 
+
+    function getToken (){
+        let url = 'https://test.js-hflm.cn/hopApi/common/getOtherUpToken'
+        // let url='https://test.js-hflm.cn/siteSystemApi/common/getUpToken'
+
+        let http = new XMLHttpRequest();
+        http.open('GET',url)
+        // http.setRequestHeader("token",'Egjtny9921232f2916281242320389')
+        // http.setRequestHeader('Access-Control-Allow-Origin',"http://localhost:63343")
+        http.se
+        http.onreadystatechange= function (){
+            if (http.readyState === XMLHttpRequest.DONE && http.status === 200){
+                console.log(http.responseText)
+            }
+        }
+        http.send()
+
+    }
+
     function chooseFile(){
+
+        console.log("qiniu",qiniu)
+
         document.getElementById('myfile').click()
+        getToken()
     }
 
     var choosedFile;
+
 
     function changeAgentContent(){
         console.log("changeAgentContent")
@@ -138,6 +163,8 @@
                 }
             });
         });
+
+
 
     });
 </script>
