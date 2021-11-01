@@ -57,6 +57,8 @@
 
         <button class="btn btn-red" type="button" id="postMessage">postMessage</button>
     </div>
+
+    <p id="log_view"></p>
 </div>
 <script type="text/javascript">
     var userAgent = navigator.userAgent;
@@ -90,7 +92,7 @@
 <script type="text/javascript">
     var choosedFile;
 
-
+    var logView = document.getElementById("log_view");
 
     function getQueryString(key) {
         console.log("getQueryString key ",key);
@@ -127,23 +129,30 @@
 
         console.log("qiniu", qiniu)
 
+        logView.innerText = "uploadFile"
         document.getElementById('myfile').click()
 
     }
 
     function uploadFile(file, token) {
         console.log("uploadFile")
+
+        logView.innerText = "uploadFile"+file.name
         let observable = {
             next(res) {
                 console.log("next",res)
+                logView.innerText = "next"
             }
             ,
             error(err) {
                 console.log("error",err)
+                logView.innerText ="error"
             }
             ,
             complete(res) {
                 console.log("complete",res)
+
+                logView.innerText = "complete"
             }
         }
         let key = Date.now() + file.name;
