@@ -47,13 +47,13 @@
 </div>
 <div class="post-message-section" style="visibility: visible;">
     <p class="desc">网页向应用发送消息，注意：小程序端应用会在此页面后退时接收到消息。</p>
-    <input type="file" id="myfile" name="file" style="display:none" onchange="changeAgentContent()"/>
+    <input type="file" id="myfile" name="file" style="display:none" onchange="changeAgentContent()" />
     <div>
-        <input type="text" value="" disabled id="myfileAgent"/>
+        <input type="text"   value="" disabled id="myfileAgent" />
     </div>
 
     <div class="btn-list">
-        <button class="btn" type="button" onclick="chooseFile()">选择文件</button>
+        <button class="btn" type="button" onclick="chooseFile()" >选择文件</button>
 
         <button class="btn btn-red" type="button" id="postMessage">postMessage</button>
     </div>
