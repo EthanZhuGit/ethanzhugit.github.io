@@ -100,6 +100,8 @@
 
     var choosedFile;
 
+    var fileKey;
+
     var logView = document.getElementById("log_view");
 
     function getQueryString(key) {
@@ -155,7 +157,7 @@
             ,
             complete(res) {
                 log(" uploadFile complete "+res.key)
-
+                fileKey=res.key
             }
         }
         let key = Date.now() + file.name;
@@ -215,9 +217,12 @@
         document.getElementById('postMessage').addEventListener('click', function () {
             uni.postMessage({
                 data: {
-                    action: 'message'
+                    action: fileKey
                 }
             });
+            uni.navigateBack({
+                delta: 1
+            })
         });
 
 
