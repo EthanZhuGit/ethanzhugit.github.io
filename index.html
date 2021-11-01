@@ -47,7 +47,7 @@
 </div>
 <div class="post-message-section" style="visibility: visible;">
     <p class="desc">网页向应用发送消息，注意：小程序端应用会在此页面后退时接收到消息。</p>
-    <input type="file" id="myfile" name="file" style="display:none" onchange="changeAgentContent()" />
+    <input type="file" id="myfile" name="file" style="display:none" onchange="changeAgentContent()"  multiple="multiple"/>
     <div>
         <input type="text"   value="" disabled id="myfileAgent" />
     </div>
@@ -90,6 +90,14 @@
 
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/qiniu-js/3.4.0/qiniu.min.js"></script>
 <script type="text/javascript">
+
+    function log(s){
+        console.log(s)
+        logView.innerText=logView.innerText+'\n'+s
+    }
+
+
+
     var choosedFile;
 
     var logView = document.getElementById("log_view");
@@ -128,31 +136,26 @@
     function chooseFile() {
 
         console.log("qiniu", qiniu)
-
-        logView.innerText = "uploadFile"
+        log("chooseFile")
         document.getElementById('myfile').click()
 
     }
 
     function uploadFile(file, token) {
-        console.log("uploadFile")
+        log("uploadFile "+file.name)
 
-        logView.innerText = "uploadFile"+file.name
         let observable = {
             next(res) {
-                console.log("next",res)
-                logView.innerText = "next"
+                log(" uploadFile next ")
             }
             ,
             error(err) {
-                console.log("error",err)
-                logView.innerText ="error"
+                log(" uploadFile error ")
             }
             ,
             complete(res) {
-                console.log("complete",res)
+                log(" uploadFile complete "+res.key)
 
-                logView.innerText = "complete"
             }
         }
         let key = Date.now() + file.name;
@@ -165,9 +168,15 @@
     function changeAgentContent() {
         var myfile = document.getElementById("myfile")
         choosedFile = myfile.files[0];
+
         document.getElementById("myfileAgent").value = document.getElementById("myfile").value;
 
-        console.log("changeAgentContent ",choosedFile)
+        log("changeAgentContent "+myfile.files.length)
+
+        for (let i = 0; i < myfile.files.length; i++) {
+            log("changeAgentContent name "+myfile.files[i].name)
+        }
+
         if (choosedFile) {
             uploadFile(choosedFile,token);
         }
@@ -210,6 +219,7 @@
                 }
             });
         });
+
 
 
     });
