@@ -47,13 +47,13 @@
 </div>
 <div class="post-message-section" style="visibility: visible;">
     <p class="desc">网页向应用发送消息，注意：小程序端应用会在此页面后退时接收到消息。</p>
-    <input type="file" id="myfile" name="file" style="display:none" onchange="changeAgentContent()" />
+    <input type="file" id="myfile" name="file" style="display:none" onchange="changeAgentContent()"/>
     <div>
-        <input type="text"   value="" disabled id="myfileAgent" />
+        <input type="text" value="" disabled id="myfileAgent"/>
     </div>
 
     <div class="btn-list">
-        <button class="btn" type="button" onclick="chooseFile()" >选择文件</button>
+        <button class="btn" type="button" onclick="chooseFile()">选择文件</button>
 
         <button class="btn btn-red" type="button" id="postMessage">postMessage</button>
     </div>
@@ -88,19 +88,34 @@
 
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/qiniu-js/3.4.0/qiniu.min.js"></script>
 <script type="text/javascript">
+    var choosedFile;
 
 
-    function getToken (){
+
+    function getQueryString(key) {
+        console.log("getQueryString key ",key);
+        var reg = new RegExp('(^|&)' + key + '=([^&]*)(&|$)')
+        var r = window.location.search.substr(1).match(reg)
+        console.log("getQueryString r ",r);
+        if (r != null) return unescape(r[2])
+        return null
+    }
+
+    var token = getQueryString('info')
+
+    console.log(token)
+
+    function getToken() {
         let url = 'https://test.js-hflm.cn/hopApi/common/getOtherUpToken'
         // let url='https://test.js-hflm.cn/siteSystemApi/common/getUpToken'
 
         let http = new XMLHttpRequest();
-        http.open('GET',url)
+        http.open('GET', url)
         // http.setRequestHeader("token",'Egjtny9921232f2916281242320389')
         // http.setRequestHeader('Access-Control-Allow-Origin',"http://localhost:63343")
-        http.se
-        http.onreadystatechange= function (){
-            if (http.readyState === XMLHttpRequest.DONE && http.status === 200){
+
+        http.onreadystatechange = function () {
+            if (http.readyState === XMLHttpRequest.DONE && http.status === 200) {
                 console.log(http.responseText)
             }
         }
@@ -108,22 +123,45 @@
 
     }
 
-    function chooseFile(){
+    function chooseFile() {
 
-        console.log("qiniu",qiniu)
+        console.log("qiniu", qiniu)
 
         document.getElementById('myfile').click()
-        getToken()
+
     }
 
-    var choosedFile;
+    function uploadFile(file, token) {
+        console.log("uploadFile")
+        let observable = {
+            next(res) {
+                console.log("next",res)
+            }
+            ,
+            error(err) {
+                console.log("error",err)
+            }
+            ,
+            complete(res) {
+                console.log("complete",res)
+            }
+        }
+        let key = Date.now() + file.name;
+        qiniu.upload(file, key, token)
+            .subscribe(observable)
+
+    }
 
 
-    function changeAgentContent(){
-        console.log("changeAgentContent")
+    function changeAgentContent() {
         var myfile = document.getElementById("myfile")
         choosedFile = myfile.files[0];
         document.getElementById("myfileAgent").value = document.getElementById("myfile").value;
+
+        console.log("changeAgentContent ",choosedFile)
+        if (choosedFile) {
+            uploadFile(choosedFile,token);
+        }
     }
 
     document.addEventListener('UniAppJSBridgeReady', function () {
@@ -163,7 +201,6 @@
                 }
             });
         });
-
 
 
     });
