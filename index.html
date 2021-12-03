@@ -192,7 +192,7 @@
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(function (event) {
                 log("success")
-                log(event)
+                log("accuracy " + event.coords.accuracy + " altitude " + event.coords.altitude + " latitude " + event.coords.latitude + " speed " + event.coords.speed + " heading " + event.coords.heading);
             }, function (event) {
                 log("error")
                 log(event)
