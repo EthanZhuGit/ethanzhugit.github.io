@@ -191,8 +191,9 @@
     function getLocation() {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(function (event) {
+                let coord = event.coords;
                 log("success")
-                log("accuracy " + event.coords.accuracy + " altitude " + event.coords.altitude + " latitude " + event.coords.latitude + " speed " + event.coords.speed + " heading " + event.coords.heading);
+                log("accuracy " + coord.accuracy + " altitude " + coord.altitude + " latitude " + coord.latitude +" longitude "+coord.longitude + " speed " + coord.speed + " heading " + coord.heading);
             }, function (event) {
                 log("error")
                 log(event)
