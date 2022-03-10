@@ -48,9 +48,11 @@
         address += e.addressComponent.district;
         address += e.addressComponent.street;
         address += e.addressComponent.streetNumber;
+        console.log("地址 " + address);
         alert("当前定位地址为：" + address);
     });
     locationControl.addEventListener("locationError",function(e){
+        console.log("定位失败", e.message);
         alert(e.message);
     });
 
