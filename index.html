@@ -190,6 +190,7 @@
 
 
     function getLocation() {
+        console.log("getLocation",navigator.geolocation)
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(function (event) {
                 let coord = event.coords;
@@ -227,11 +228,11 @@
                             delta: 1
                         });
                         break;
-                    default:
-                        uni[action]({
-                            url: '/pages/component/button/button'
-                        });
-                        break;
+                    // default:
+                    //     uni[action]({
+                    //         url: '/pages/component/button/button'
+                    //     });
+                    //     break;
                 }
             }
         });
